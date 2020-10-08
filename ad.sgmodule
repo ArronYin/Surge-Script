@@ -2,10 +2,9 @@
 #!desc=RemoveAds&Unlock：去广告、解锁等规则和脚本，「括号内为对应的hostname，可根据自己需求修改」
 
 [URL Rewrite]
-# > tiktok解锁(*.tiktokv.com, *.byteoversea.com, *.musical.ly, *.snssdk.com)
 (?<=_region=)CN(?=&) JP 307
-(?<=&app_version=)15..(?=.?.?&) 1 307
-(?<=\?version_code=)15..(?=.?.?&) 1 307
+(?<=&app_version=)17..(?=.?.?&) 1 307
+(?<=\?version_code=)17..(?=.?.?&) 1 307
 
 # > tiktok去水印(*.amemv.com, *.snssdk.com)
 ^https://aweme-eagle(.*)\.snssdk\.com/aweme/v2/ https://aweme-eagle$1.snssdk.com/aweme/v1/ 302
@@ -25,4 +24,4 @@ WeChat = script-path=https://Choler.github.io/Surge/Script/WeChat.js,type=http-r
 
 
 [MITM]
-hostname = %APPEND% -*.tiktokv.com, *.byteoversea.com, *.musical.ly, *.snssdk.com, *.amemv.com, api.gamer.com.tw, api.weibo.cn, mapi.weibo.com, *.uve.weibo.com, mp.weixin.qq.com
+hostname = %APPEND% *.tiktokv.com, *.byteoversea.com, *.musical.ly, *.snssdk.com,*.amemv.com, api.gamer.com.tw, api.weibo.cn, mapi.weibo.com, *.uve.weibo.com, mp.weixin.qq.com
