@@ -1,1 +1,28 @@
+#!name=RemoveAds&Unlock
+#!desc=RemoveAds&Unlock：去广告、解锁等规则和脚本，「括号内为对应的hostname，可根据自己需求修改」
 
+[URL Rewrite]
+# > tiktok解锁(*.tiktokv.com, *.byteoversea.com, *.musical.ly, *.snssdk.com)
+(?<=_region=)CN(?=&) JP 307
+(?<=&app_version=)15..(?=.?.?&) 1 307
+(?<=\?version_code=)15..(?=.?.?&) 1 307
+
+# > tiktok去水印(*.amemv.com, *.snssdk.com)
+^https://aweme-eagle(.*)\.snssdk\.com/aweme/v2/ https://aweme-eagle$1.snssdk.com/aweme/v1/ 302
+
+[Script]
+# > tiktok去水印(*.amemv.com, *.snssdk.com)
+Aweme = type=http-request,pattern=https:\/\/.*\.amemv\.com\/aweme\/v.*\/(feed|post),script-path=https://Choler.github.io/Surge/Script/Aweme.js
+Aweme = type=http-response,pattern=https:\/\/.*\.amemv\.com\/aweme\/v.*\/(feed|post),requires-body=true,script-path=https://Choler.github.io/Surge/Script/Aweme.js
+
+# > Weibo去广告(api.weibo.cn, mapi.weibo.com, *.uve.weibo.com)
+Weibo = requires-body=1,script-path=https://raw.githubusercontent.com/yichahucha/surge/master/wb_ad.js,type=http-response,pattern=^https?://m?api\.weibo\.c(n|om)/2/(statuses/(unread|extend|positives/get|(friends|video)(/|_)timeline)|stories/(video_stream|home_list)|(groups|fangle)/timeline|profile/statuses|comments/build_comments|photo/recommend_list|service/picfeed|searchall|cardlist|page|\!/photos/pic_recommend_status)
+Weibo = requires-body=1,script-path=https://raw.githubusercontent.com/yichahucha/surge/master/wb_launch.js,type=http-response,pattern=^https?://(sdk|wb)app\.uve\.weibo\.com(/interface/sdk/sdkad.php|/wbapplua/wbpullad.lua)
+
+# > WeChat去广告(mp.weixin.qq.com)
+WeChat = script-path=https://Choler.github.io/Surge/Script/WeChat.js,type=http-request,pattern=^https://mp\.weixin\.qq\.com/mp/getappmsgad
+
+
+
+[MITM]
+hostname = %APPEND% -*.googlevideo.com, *.youtube.com, youtubei.googleapis.com, api.zhihu.com, www.zhihu.com, www.bilibili.com, api.bilibili.com, app.bilibili.com, api.live.bilibili.com, *.tiktokv.com, *.byteoversea.com, *.musical.ly, *.snssdk.com, *.amemv.com, api.gamer.com.tw, api.weibo.cn, mapi.weibo.com, *.uve.weibo.com, api.m.jd.com, amdc.m.taobao.com, trade-acs.m.taobao.com, ios.prod.ftl.netflix.com, mp.weixin.qq.com, r.inews.qq.com
